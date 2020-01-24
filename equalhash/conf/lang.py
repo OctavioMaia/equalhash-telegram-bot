@@ -1,5 +1,4 @@
 translations = {
-    "en": {
         "startMessage": "I can help you see all of your EqualHash.pt statistics\n\nYou can control me by "
                         "sending these "
                         "commands:\n\n/newaddr - Add new address\n/myaddrs - View all address\n\n*Edit "
@@ -44,5 +43,4 @@ translations = {
         "statusNotifications": "Status notifications: *<STATUS>*",
         "enableNotifications": "Choose the address you want to - *Activate* - notifications:",
         "disableNotifications": "Choose the address you want to - *Disable* - notifications:"
-    }
 }
