@@ -125,7 +125,7 @@ def keyboardStats2(infoUserCall):
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     markup.add(
-        InlineKeyboardButton(translations[infoUserCall]['return'], callback_data="statsReturn"))
+        InlineKeyboardButton(translations['return'], callback_data="statsReturn"))
 
     return markup
 
@@ -135,7 +135,7 @@ def keyboardStats3(infoUserCall):
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     markup.add(
-        InlineKeyboardButton(translations[infoUserCall]['return'], callback_data="statsaddr"))
+        InlineKeyboardButton(translations['return'], callback_data="statsaddr"))
 
     return markup
 
@@ -145,7 +145,7 @@ def keyboardReturnMyAddrs(infoUserCall):
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     markup.add(
-        InlineKeyboardButton(translations[infoUserCall]['return'], callback_data="myAddrs"))
+        InlineKeyboardButton(translations['return'], callback_data="myAddrs"))
 
     return markup
 
@@ -191,7 +191,7 @@ def keyboardAddress(infoUserCall, addresses, prefix, buttonReturn=True):
     # Button to return
     if buttonReturn:
         markup.add(
-            InlineKeyboardButton(translations[infoUserCall]['return'], callback_data="statsReturn"))
+            InlineKeyboardButton(translations['return'], callback_data="statsReturn"))
 
     return markup
 
@@ -201,13 +201,13 @@ def keyboardOptionsAddr(infoUserCall, address):
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
     markup.add(
-        InlineKeyboardButton(translations[infoUserCall]['viewStats'], callback_data="stats-" + address),
-        InlineKeyboardButton(translations[infoUserCall]['editAddr'],
+        InlineKeyboardButton(translations['viewStats'], callback_data="stats-" + address),
+        InlineKeyboardButton(translations['editAddr'],
                              callback_data="editAddr-" + address),
-        InlineKeyboardButton(translations[infoUserCall]['delAddr'], callback_data="delAddr-" + address),
-        InlineKeyboardButton(translations[infoUserCall]['notifications'],
+        InlineKeyboardButton(translations['delAddr'], callback_data="delAddr-" + address),
+        InlineKeyboardButton(translations['notifications'],
                              callback_data="notAddr-" + address),
-        InlineKeyboardButton(translations[infoUserCall]['return'], callback_data="myAddrs"))
+        InlineKeyboardButton(translations['return'], callback_data="myAddrs"))
 
     return markup
 
@@ -217,7 +217,7 @@ def keyboardDeleteAddres(infoUserCall, address):
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     markup.add(
-        InlineKeyboardButton(translations[infoUserCall]['yesDelAddr'],
+        InlineKeyboardButton(translations['yesDelAddr'],
                              callback_data="yesDelAddr-" + address),
         InlineKeyboardButton("No", callback_data="myAddrs"))
 
@@ -229,9 +229,9 @@ def keyboardEditAddress(infoUserCall, address):
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
     markup.add(
-        InlineKeyboardButton(translations[infoUserCall]['editNameAddr'],
+        InlineKeyboardButton(translations['editNameAddr'],
                              callback_data="setNameAddr-" + address),
-        InlineKeyboardButton(translations[infoUserCall]['editCodeAddr'],
+        InlineKeyboardButton(translations['editCodeAddr'],
                              callback_data="setCodeAddr-" + address))
 
     return markup
@@ -464,18 +464,18 @@ def callback_query(call):
         if addrs.explain()['executionStats']['nReturned'] == 0:
             logger.info("Found 0 Address User: {0}".format(infoUserCall['_id']))
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                  text=u"\u26A0 " + str(translations[infoUserCall]['noneAddr']))
+                                  text=u"\u26A0 " + str(translations['noneAddr']))
 
         else:
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                  text=translations[infoUserCall]['selectAddr'])
+                                  text=translations['selectAddr'])
             bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                           reply_markup=keyboardAddress(infoUserCall, addrs, 'stats-', True))
 
     # Return to select address for view stats
     elif call.data == "statsReturn":
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=str(translations[infoUserCall]['stats1']))
+                              text=str(translations['stats1']))
         bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                       reply_markup=keyboardStats1(infoUserCall))
 
@@ -490,7 +490,7 @@ def callback_query(call):
         if 'ok' in responseStats and responseStats['error_code'] == 404:
             logger.info('No information for the address: {0}'.format(addressCode))
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                  text=translations[infoUserCall]['noStats'])
+                                  text=translations['noStats'])
             bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                           reply_markup=keyboardStats3(infoUserCall))
         else:
@@ -531,7 +531,7 @@ def callback_query(call):
         addrs = addrCol.find({"idUser": infoUserCall['_id']})
         logger.debug("Send keyboard myAddrs to user: {0}".format(infoUserCall['_id']))
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=translations[infoUserCall]['selectAddr'],
+                              text=translations['selectAddr'],
                               parse_mode='Markdown')
         bot.edit_message_reply_markup(chat_id=infoUserCall['_id'], message_id=call.message.message_id,
                                       reply_markup=keyboardAddress(infoUserCall, addrs, 'myaddr-', False))
@@ -541,7 +541,7 @@ def callback_query(call):
         logger.debug("Send keyboard edit information address {0}".format(infoUserCall['_id']))
         addressCode = str(call.data).replace('myaddr-', '')
         addresName = (addrCol.find_one({"address": addressCode, "idUser": infoUserCall['_id']}))['name']
-        messageText = translations[infoUserCall]['viewAddr']
+        messageText = translations['viewAddr']
         messageText = messageText.replace("<NAMEADDRESS>", addresName)
         messageText = messageText.replace("<ADDRESS>", addressCode)
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=messageText,
@@ -553,7 +553,7 @@ def callback_query(call):
     elif re.search("^delAddr-+", call.data):
         addressCode = str(call.data).replace('delAddr-', '')
         addresName = (addrCol.find_one({"address": addressCode, "idUser": infoUserCall['_id']}))['name']
-        messageText = translations[infoUserCall]['delAddr2']
+        messageText = translations['delAddr2']
         messageText = messageText.replace("<NAMEADDRESS>", addresName)
         messageText = messageText.replace("<ADDRESS>", addressCode)
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=messageText,
@@ -567,7 +567,7 @@ def callback_query(call):
         logger.info("Delete addres {0} user: {1}".format(addressCode, infoUserCall['_id']))
         addrCol.delete_one({"address": addressCode, "idUser": infoUserCall['_id']})
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=translations[infoUserCall]['addrDelOk'],
+                              text=translations['addrDelOk'],
                               parse_mode='Markdown')
         bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                       reply_markup=keyboardReturnMyAddrs(infoUserCall))
@@ -576,7 +576,7 @@ def callback_query(call):
     elif re.search("^editAddr-+", call.data):
         addressCode = str(call.data).replace('editAddr-', '')
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=translations[infoUserCall]['optEdit'],
+                              text=translations['optEdit'],
                               parse_mode='Markdown')
         bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                       reply_markup=keyboardEditAddress(infoUserCall, addressCode))
@@ -585,7 +585,7 @@ def callback_query(call):
     elif re.search("^setNameAddr-+", call.data):
         addressCode = str(call.data).replace('setNameAddr-', '')
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=translations[infoUserCall]['newNameAddr'],
+                              text=translations['newNameAddr'],
                               parse_mode='Markdown')
 
         logger.debug(
@@ -599,7 +599,7 @@ def callback_query(call):
     elif re.search("^setCodeAddr-+", call.data):
         addressCode = str(call.data).replace('setCodeAddr-', '')
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=translations[infoUserCall]['newCodeAddr'],
+                              text=translations['newCodeAddr'],
                               parse_mode='Markdown')
 
         logger.debug(
@@ -613,7 +613,7 @@ def callback_query(call):
     elif re.search("^notAddr-+", call.data):
         addressCode = str(call.data).replace('notAddr-', '')
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=translations[infoUserCall]['descNotifications'],
+                              text=translations['descNotifications'],
                               parse_mode='Markdown')
 
         bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id,
@@ -624,7 +624,7 @@ def callback_query(call):
         addressCode = str(call.data).replace('notON-', '')
         logger.info("Activate notifications for: user -> {0} address ->{1}".format(infoUserCall['_id'], addressCode))
         addrCol.update_one({"address": addressCode, "idUser": infoUserCall['_id']}, {"$set": {"notifications": True}})
-        messageText = translations[infoUserCall]['statusNotifications']
+        messageText = translations['statusNotifications']
         messageText = messageText.replace("<STATUS>", "ON")
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=messageText, parse_mode='Markdown')
@@ -636,7 +636,7 @@ def callback_query(call):
         addressCode = str(call.data).replace('notOFF-', '')
         logger.info("Desactivate notifications for: user -> {0} address ->{1}".format(infoUserCall['_id'], addressCode))
         addrCol.update_one({"address": addressCode, "idUser": infoUserCall['_id']}, {"$set": {"notifications": False}})
-        messageText = translations[infoUserCall]['statusNotifications']
+        messageText = translations['statusNotifications']
         messageText = messageText.replace("<STATUS>", "OFF")
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=messageText, parse_mode='Markdown')
