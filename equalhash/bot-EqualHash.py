@@ -114,8 +114,8 @@ def checkUser(userDocument):
 def keyboardStats1(infoUserDB):
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
-    markup.add(InlineKeyboardButton(translations[infoUserDB]['statsp2m'], callback_data="statsp2m"),
-               InlineKeyboardButton(translations[infoUserDB]['statsaddr'], callback_data="statsaddr"))
+    markup.add(InlineKeyboardButton(translations['statsp2m'], callback_data="statsp2m"),
+               InlineKeyboardButton(translations['statsaddr'], callback_data="statsaddr"))
 
     return markup
 
@@ -300,7 +300,7 @@ http = urllib3.PoolManager()
 @bot.message_handler(commands=['start'])
 def message_start(message):
     infoUserDB = checkUser(infoUser(message))
-    bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB]['startMessage']),
+    bot.send_message(chat_id=infoUserDB['_id'], text=str(translations['startMessage']),
                      parse_mode='Markdown')
 
 
@@ -308,7 +308,7 @@ def message_start(message):
 @bot.message_handler(commands=['seestats'])
 def message_seestats(message):
     infoUserDB = checkUser(infoUser(message))
-    bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB]['stats1']),
+    bot.send_message(chat_id=infoUserDB['_id'], text=str(translations['stats1']),
                      reply_markup=keyboardStats1(infoUserDB))
 
 
@@ -323,10 +323,10 @@ def message_myaddrs(message):
     if addrs.explain()['executionStats']['nReturned'] == 0:
         logger.info("Found 0 Address User: {0}".format(infoUserDB['_id']))
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=u"\u26A0 " + str(translations[infoUserDB]['noneAddr']))
+                         text=u"\u26A0 " + str(translations['noneAddr']))
 
     else:
-        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB]['selectAddr']),
+        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations['selectAddr']),
                          reply_markup=keyboardAddress(infoUserDB, addrs, 'myaddr-', False))
 
 
@@ -334,7 +334,7 @@ def message_myaddrs(message):
 @bot.message_handler(commands=['newaddr'])
 def message_newaddr(message):
     infoUserDB = checkUser(infoUser(message))
-    response = bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB]['newAddr']),
+    response = bot.send_message(chat_id=infoUserDB['_id'], text=str(translations['newAddr']),
                                 parse_mode='Markdown')
     userColl.update_one({"_id": str(infoUserDB['_id'])},
                         {"$set": {"lastMessage.type": "newaddr", "lastMessage.idMessage": str(response.message_id)}})
@@ -350,10 +350,10 @@ def message_deleteaddr(message):
     if addrs.explain()['executionStats']['nReturned'] == 0:
         logger.info("Found 0 Address User: {0}".format(infoUserDB['_id']))
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=u"\u26A0 " + str(translations[infoUserDB]['noneAddr']))
+                         text=u"\u26A0 " + str(translations['noneAddr']))
 
     else:
-        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB]['delAddrC']),
+        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations['delAddrC']),
                          reply_markup=keyboardAddress(infoUserDB, addrs, 'delAddr-', False), parse_mode='Markdown')
 
 
@@ -367,10 +367,10 @@ def message_setname(message):
     if addrs.explain()['executionStats']['nReturned'] == 0:
         logger.info("Found 0 Address User: {0}".format(infoUserDB['_id']))
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=u"\u26A0 " + str(translations[infoUserDB]['noneAddr']))
+                         text=u"\u26A0 " + str(translations['noneAddr']))
 
     else:
-        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB]['setnameAddrC']),
+        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations['setnameAddrC']),
                          reply_markup=keyboardAddress(infoUserDB, addrs, 'setNameAddr-', False), parse_mode='Markdown')
 
 
@@ -384,10 +384,10 @@ def message_setname(message):
     if addrs.explain()['executionStats']['nReturned'] == 0:
         logger.info("Found 0 Address User: {0}".format(infoUserDB['_id']))
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=u"\u26A0 " + str(translations[infoUserDB]['noneAddr']))
+                         text=u"\u26A0 " + str(translations['noneAddr']))
 
     else:
-        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB]['setcodeAddrC']),
+        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations['setcodeAddrC']),
                          reply_markup=keyboardAddress(infoUserDB, addrs, 'setCodeAddr-', False))
 
 
@@ -401,11 +401,11 @@ def message_enablenotification(message):
     if addrs.explain()['executionStats']['nReturned'] == 0:
         logger.info("Found 0 Address User: {0}".format(infoUserDB['_id']))
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=u"\u26A0 " + str(translations[infoUserDB]['noneAddr']))
+                         text=u"\u26A0 " + str(translations['noneAddr']))
 
     else:
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=str(translations[infoUserDB]['enableNotifications']),
+                         text=str(translations['enableNotifications']),
                          reply_markup=keyboardAddress(infoUserDB, addrs, 'notON-', False), parse_mode='Markdown')
 
 
@@ -419,11 +419,11 @@ def message_disablenotification(message):
     if addrs.explain()['executionStats']['nReturned'] == 0:
         logger.info("Found 0 Address User: {0}".format(infoUserDB['_id']))
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=u"\u26A0 " + str(translations[infoUserDB]['noneAddr']))
+                         text=u"\u26A0 " + str(translations['noneAddr']))
 
     else:
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=str(translations[infoUserDB]['disableNotifications']),
+                         text=str(translations['disableNotifications']),
                          reply_markup=keyboardAddress(infoUserDB, addrs, 'notOFF-', False), parse_mode='Markdown')
 
 
@@ -660,7 +660,7 @@ def message_other(message):
         logger.debug("Save the name address on lastMessage -> idUser: {0}, nameAddr: {1}".format(infoUserDB['_id'],
                                                                                                  message.text))
         response = bot.send_message(chat_id=infoUserDB['_id'],
-                                    text=str(translations[infoUserDB]['newAddr2']),
+                                    text=str(translations['newAddr2']),
                                     parse_mode='Markdown')
         userColl.update_one({"_id": str(infoUserDB['_id'])}, {
             "$set": {"lastMessage.type": "newaddr2", "lastMessage.idMessage": str(response.message_id),
@@ -676,7 +676,7 @@ def message_other(message):
             {'name': infoUserDB['lastMessage']['text'], "address": message.text, "idUser": infoUserDB['_id'],
              "notifications": False, "statusWorkers": {}})
 
-        messageText = str(translations[infoUserDB]['newAddr3'])
+        messageText = str(translations['newAddr3'])
         messageText = messageText.replace("<NAMEADDRESS>", infoUserDB['lastMessage']['text'])
         messageText = messageText.replace("<ADDRESS>", message.text)
 
@@ -696,7 +696,7 @@ def message_other(message):
 
         infoAddr = addrCol.find_one({'idUser': str(infoUserDB['_id']), "address": infoUserDB['lastMessage']['text']})
 
-        messageText = str(translations[infoUserDB]['addrUpdate'])
+        messageText = str(translations['addrUpdate'])
         messageText = messageText.replace("<NAMEADDRESS>", infoAddr['name'])
         messageText = messageText.replace("<ADDRESS>", infoAddr['address'])
         bot.send_message(chat_id=infoUserDB['_id'], text=messageText, parse_mode='Markdown')
@@ -713,7 +713,7 @@ def message_other(message):
 
         infoAddr = addrCol.find_one({'idUser': str(infoUserDB['_id']), "address": message.text})
 
-        messageText = str(translations[infoUserDB]['addrUpdate'])
+        messageText = str(translations['addrUpdate'])
         messageText = messageText.replace("<NAMEADDRESS>", infoAddr['name'])
         messageText = messageText.replace("<ADDRESS>", infoAddr['address'])
         bot.send_message(chat_id=infoUserDB['_id'], text=messageText, parse_mode='Markdown')
