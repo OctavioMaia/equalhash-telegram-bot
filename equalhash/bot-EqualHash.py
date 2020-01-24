@@ -48,7 +48,6 @@ def infoUser(message):
     name = message.from_user.first_name
     lastName = message.from_user.last_name
     username = message.from_user.username
-    languageCode = message.from_user.language_code
     registrationDate = datetime.utcnow()
 
     userDocument = {
@@ -56,7 +55,7 @@ def infoUser(message):
         'username': username,
         'name': name,
         'lastName': lastName,
-        'languageCode': languageCode,
+        'languageCode': 'en',
         'registrationDate': registrationDate,
         'lastMessage': {
             'type': '',
@@ -64,12 +63,6 @@ def infoUser(message):
             'text': ''
         }
     }
-
-    
-    if languageCode not in translations:
-        userDocument['languageApp'] = 'en'
-    else:
-        userDocument['languageApp'] = languageCode
 
     return userDocument
 
@@ -84,7 +77,6 @@ def infoUserCallback(message):
     name = message.from_user.first_name
     lastName = message.from_user.last_name
     username = message.from_user.username
-    languageCode = message.from_user.language_code
     registrationDate = datetime.utcnow()
 
     userDocument = {
@@ -92,7 +84,7 @@ def infoUserCallback(message):
         'username': username,
         'name': name,
         'lastName': lastName,
-        'languageCode': languageCode,
+        'languageCode': 'en',
         'registrationDate': registrationDate,
         'lastMessage': {
             'type': '',
@@ -100,12 +92,7 @@ def infoUserCallback(message):
             'text': ''
         }
     }
-
-    if languageCode not in translations:
-        userDocument['languageApp'] = 'en'
-    else:
-        userDocument['languageApp'] = languageCode
-
+    
     return userDocument
 
 
