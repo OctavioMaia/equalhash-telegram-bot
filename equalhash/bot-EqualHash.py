@@ -56,7 +56,7 @@ def infoUser(message):
         'username': username,
         'name': name,
         'lastName': lastName,
-        'languageCode': 'en',
+        'languageCode': languageCode,
         'registrationDate': registrationDate,
         'lastMessage': {
             'type': '',
@@ -66,10 +66,10 @@ def infoUser(message):
     }
 
     
-    #if languageCode not in translations:
-    #    userDocument['languageApp'] = 'en'
-    #else:
-    #    userDocument['languageApp'] = languageCode
+    if languageCode not in translations:
+        userDocument['languageApp'] = 'en'
+    else:
+        userDocument['languageApp'] = languageCode
 
     return userDocument
 
@@ -92,7 +92,7 @@ def infoUserCallback(message):
         'username': username,
         'name': name,
         'lastName': lastName,
-        'languageCode': 'en',
+        'languageCode': languageCode,
         'registrationDate': registrationDate,
         'lastMessage': {
             'type': '',
@@ -101,10 +101,10 @@ def infoUserCallback(message):
         }
     }
 
-    #if languageCode not in translations:
-    #    userDocument['languageApp'] = 'en'
-    #else:
-    #    userDocument['languageApp'] = languageCode
+    if languageCode not in translations:
+        userDocument['languageApp'] = 'en'
+    else:
+        userDocument['languageApp'] = languageCode
 
     return userDocument
 
