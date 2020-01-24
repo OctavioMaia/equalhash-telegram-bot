@@ -114,8 +114,8 @@ def checkUser(userDocument):
 def keyboardStats1(infoUserDB):
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
-    markup.add(InlineKeyboardButton(translations[infoUserDB[''en'']]['statsp2m'], callback_data="statsp2m"),
-               InlineKeyboardButton(translations[infoUserDB[''en'']]['statsaddr'], callback_data="statsaddr"))
+    markup.add(InlineKeyboardButton(translations[infoUserDB['en']]['statsp2m'], callback_data="statsp2m"),
+               InlineKeyboardButton(translations[infoUserDB['en']]['statsaddr'], callback_data="statsaddr"))
 
     return markup
 
@@ -125,7 +125,7 @@ def keyboardStats2(infoUserCall):
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     markup.add(
-        InlineKeyboardButton(translations[infoUserCall[''en'']]['return'], callback_data="statsReturn"))
+        InlineKeyboardButton(translations[infoUserCall['en']]['return'], callback_data="statsReturn"))
 
     return markup
 
@@ -135,7 +135,7 @@ def keyboardStats3(infoUserCall):
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     markup.add(
-        InlineKeyboardButton(translations[infoUserCall[''en'']]['return'], callback_data="statsaddr"))
+        InlineKeyboardButton(translations[infoUserCall['en']]['return'], callback_data="statsaddr"))
 
     return markup
 
@@ -145,7 +145,7 @@ def keyboardReturnMyAddrs(infoUserCall):
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     markup.add(
-        InlineKeyboardButton(translations[infoUserCall[''en'']]['return'], callback_data="myAddrs"))
+        InlineKeyboardButton(translations[infoUserCall['en']]['return'], callback_data="myAddrs"))
 
     return markup
 
@@ -191,7 +191,7 @@ def keyboardAddress(infoUserCall, addresses, prefix, buttonReturn=True):
     # Button to return
     if buttonReturn:
         markup.add(
-            InlineKeyboardButton(translations[infoUserCall[''en'']]['return'], callback_data="statsReturn"))
+            InlineKeyboardButton(translations[infoUserCall['en']]['return'], callback_data="statsReturn"))
 
     return markup
 
@@ -201,13 +201,13 @@ def keyboardOptionsAddr(infoUserCall, address):
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
     markup.add(
-        InlineKeyboardButton(translations[infoUserCall[''en'']]['viewStats'], callback_data="stats-" + address),
-        InlineKeyboardButton(translations[infoUserCall[''en'']]['editAddr'],
+        InlineKeyboardButton(translations[infoUserCall['en']]['viewStats'], callback_data="stats-" + address),
+        InlineKeyboardButton(translations[infoUserCall['en']]['editAddr'],
                              callback_data="editAddr-" + address),
-        InlineKeyboardButton(translations[infoUserCall[''en'']]['delAddr'], callback_data="delAddr-" + address),
-        InlineKeyboardButton(translations[infoUserCall[''en'']]['notifications'],
+        InlineKeyboardButton(translations[infoUserCall['en']]['delAddr'], callback_data="delAddr-" + address),
+        InlineKeyboardButton(translations[infoUserCall['en']]['notifications'],
                              callback_data="notAddr-" + address),
-        InlineKeyboardButton(translations[infoUserCall[''en'']]['return'], callback_data="myAddrs"))
+        InlineKeyboardButton(translations[infoUserCall['en']]['return'], callback_data="myAddrs"))
 
     return markup
 
@@ -217,7 +217,7 @@ def keyboardDeleteAddres(infoUserCall, address):
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     markup.add(
-        InlineKeyboardButton(translations[infoUserCall[''en'']]['yesDelAddr'],
+        InlineKeyboardButton(translations[infoUserCall['en']]['yesDelAddr'],
                              callback_data="yesDelAddr-" + address),
         InlineKeyboardButton("No", callback_data="myAddrs"))
 
@@ -229,9 +229,9 @@ def keyboardEditAddress(infoUserCall, address):
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
     markup.add(
-        InlineKeyboardButton(translations[infoUserCall[''en'']]['editNameAddr'],
+        InlineKeyboardButton(translations[infoUserCall['en']]['editNameAddr'],
                              callback_data="setNameAddr-" + address),
-        InlineKeyboardButton(translations[infoUserCall[''en'']]['editCodeAddr'],
+        InlineKeyboardButton(translations[infoUserCall['en']]['editCodeAddr'],
                              callback_data="setCodeAddr-" + address))
 
     return markup
@@ -300,7 +300,7 @@ http = urllib3.PoolManager()
 @bot.message_handler(commands=['start'])
 def message_start(message):
     infoUserDB = checkUser(infoUser(message))
-    bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB[''en'']]['startMessage']),
+    bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB['en']]['startMessage']),
                      parse_mode='Markdown')
 
 
@@ -308,7 +308,7 @@ def message_start(message):
 @bot.message_handler(commands=['seestats'])
 def message_seestats(message):
     infoUserDB = checkUser(infoUser(message))
-    bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB[''en'']]['stats1']),
+    bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB['en']]['stats1']),
                      reply_markup=keyboardStats1(infoUserDB))
 
 
@@ -323,10 +323,10 @@ def message_myaddrs(message):
     if addrs.explain()['executionStats']['nReturned'] == 0:
         logger.info("Found 0 Address User: {0}".format(infoUserDB['_id']))
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=u"\u26A0 " + str(translations[infoUserDB[''en'']]['noneAddr']))
+                         text=u"\u26A0 " + str(translations[infoUserDB['en']]['noneAddr']))
 
     else:
-        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB[''en'']]['selectAddr']),
+        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB['en']]['selectAddr']),
                          reply_markup=keyboardAddress(infoUserDB, addrs, 'myaddr-', False))
 
 
@@ -334,7 +334,7 @@ def message_myaddrs(message):
 @bot.message_handler(commands=['newaddr'])
 def message_newaddr(message):
     infoUserDB = checkUser(infoUser(message))
-    response = bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB[''en'']]['newAddr']),
+    response = bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB['en']]['newAddr']),
                                 parse_mode='Markdown')
     userColl.update_one({"_id": str(infoUserDB['_id'])},
                         {"$set": {"lastMessage.type": "newaddr", "lastMessage.idMessage": str(response.message_id)}})
@@ -350,10 +350,10 @@ def message_deleteaddr(message):
     if addrs.explain()['executionStats']['nReturned'] == 0:
         logger.info("Found 0 Address User: {0}".format(infoUserDB['_id']))
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=u"\u26A0 " + str(translations[infoUserDB[''en'']]['noneAddr']))
+                         text=u"\u26A0 " + str(translations[infoUserDB['en']]['noneAddr']))
 
     else:
-        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB[''en'']]['delAddrC']),
+        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB['en']]['delAddrC']),
                          reply_markup=keyboardAddress(infoUserDB, addrs, 'delAddr-', False), parse_mode='Markdown')
 
 
@@ -367,10 +367,10 @@ def message_setname(message):
     if addrs.explain()['executionStats']['nReturned'] == 0:
         logger.info("Found 0 Address User: {0}".format(infoUserDB['_id']))
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=u"\u26A0 " + str(translations[infoUserDB[''en'']]['noneAddr']))
+                         text=u"\u26A0 " + str(translations[infoUserDB['en']]['noneAddr']))
 
     else:
-        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB[''en'']]['setnameAddrC']),
+        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB['en']]['setnameAddrC']),
                          reply_markup=keyboardAddress(infoUserDB, addrs, 'setNameAddr-', False), parse_mode='Markdown')
 
 
@@ -384,10 +384,10 @@ def message_setname(message):
     if addrs.explain()['executionStats']['nReturned'] == 0:
         logger.info("Found 0 Address User: {0}".format(infoUserDB['_id']))
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=u"\u26A0 " + str(translations[infoUserDB[''en'']]['noneAddr']))
+                         text=u"\u26A0 " + str(translations[infoUserDB['en']]['noneAddr']))
 
     else:
-        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB[''en'']]['setcodeAddrC']),
+        bot.send_message(chat_id=infoUserDB['_id'], text=str(translations[infoUserDB['en']]['setcodeAddrC']),
                          reply_markup=keyboardAddress(infoUserDB, addrs, 'setCodeAddr-', False))
 
 
@@ -401,11 +401,11 @@ def message_enablenotification(message):
     if addrs.explain()['executionStats']['nReturned'] == 0:
         logger.info("Found 0 Address User: {0}".format(infoUserDB['_id']))
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=u"\u26A0 " + str(translations[infoUserDB[''en'']]['noneAddr']))
+                         text=u"\u26A0 " + str(translations[infoUserDB['en']]['noneAddr']))
 
     else:
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=str(translations[infoUserDB[''en'']]['enableNotifications']),
+                         text=str(translations[infoUserDB['en']]['enableNotifications']),
                          reply_markup=keyboardAddress(infoUserDB, addrs, 'notON-', False), parse_mode='Markdown')
 
 
@@ -419,11 +419,11 @@ def message_disablenotification(message):
     if addrs.explain()['executionStats']['nReturned'] == 0:
         logger.info("Found 0 Address User: {0}".format(infoUserDB['_id']))
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=u"\u26A0 " + str(translations[infoUserDB[''en'']]['noneAddr']))
+                         text=u"\u26A0 " + str(translations[infoUserDB['en']]['noneAddr']))
 
     else:
         bot.send_message(chat_id=infoUserDB['_id'],
-                         text=str(translations[infoUserDB[''en'']]['disableNotifications']),
+                         text=str(translations[infoUserDB['en']]['disableNotifications']),
                          reply_markup=keyboardAddress(infoUserDB, addrs, 'notOFF-', False), parse_mode='Markdown')
 
 
@@ -464,18 +464,18 @@ def callback_query(call):
         if addrs.explain()['executionStats']['nReturned'] == 0:
             logger.info("Found 0 Address User: {0}".format(infoUserCall['_id']))
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                  text=u"\u26A0 " + str(translations[infoUserCall[''en'']]['noneAddr']))
+                                  text=u"\u26A0 " + str(translations[infoUserCall['en']]['noneAddr']))
 
         else:
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                  text=translations[infoUserCall[''en'']]['selectAddr'])
+                                  text=translations[infoUserCall['en']]['selectAddr'])
             bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                           reply_markup=keyboardAddress(infoUserCall, addrs, 'stats-', True))
 
     # Return to select address for view stats
     elif call.data == "statsReturn":
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=str(translations[infoUserCall[''en'']]['stats1']))
+                              text=str(translations[infoUserCall['en']]['stats1']))
         bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                       reply_markup=keyboardStats1(infoUserCall))
 
@@ -490,7 +490,7 @@ def callback_query(call):
         if 'ok' in responseStats and responseStats['error_code'] == 404:
             logger.info('No information for the address: {0}'.format(addressCode))
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                  text=translations[infoUserCall[''en'']]['noStats'])
+                                  text=translations[infoUserCall['en']]['noStats'])
             bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                           reply_markup=keyboardStats3(infoUserCall))
         else:
@@ -531,7 +531,7 @@ def callback_query(call):
         addrs = addrCol.find({"idUser": infoUserCall['_id']})
         logger.debug("Send keyboard myAddrs to user: {0}".format(infoUserCall['_id']))
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=translations[infoUserCall[''en'']]['selectAddr'],
+                              text=translations[infoUserCall['en']]['selectAddr'],
                               parse_mode='Markdown')
         bot.edit_message_reply_markup(chat_id=infoUserCall['_id'], message_id=call.message.message_id,
                                       reply_markup=keyboardAddress(infoUserCall, addrs, 'myaddr-', False))
@@ -541,7 +541,7 @@ def callback_query(call):
         logger.debug("Send keyboard edit information address {0}".format(infoUserCall['_id']))
         addressCode = str(call.data).replace('myaddr-', '')
         addresName = (addrCol.find_one({"address": addressCode, "idUser": infoUserCall['_id']}))['name']
-        messageText = translations[infoUserCall[''en'']]['viewAddr']
+        messageText = translations[infoUserCall['en']]['viewAddr']
         messageText = messageText.replace("<NAMEADDRESS>", addresName)
         messageText = messageText.replace("<ADDRESS>", addressCode)
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=messageText,
@@ -553,7 +553,7 @@ def callback_query(call):
     elif re.search("^delAddr-+", call.data):
         addressCode = str(call.data).replace('delAddr-', '')
         addresName = (addrCol.find_one({"address": addressCode, "idUser": infoUserCall['_id']}))['name']
-        messageText = translations[infoUserCall[''en'']]['delAddr2']
+        messageText = translations[infoUserCall['en']]['delAddr2']
         messageText = messageText.replace("<NAMEADDRESS>", addresName)
         messageText = messageText.replace("<ADDRESS>", addressCode)
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=messageText,
@@ -567,7 +567,7 @@ def callback_query(call):
         logger.info("Delete addres {0} user: {1}".format(addressCode, infoUserCall['_id']))
         addrCol.delete_one({"address": addressCode, "idUser": infoUserCall['_id']})
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=translations[infoUserCall[''en'']]['addrDelOk'],
+                              text=translations[infoUserCall['en']]['addrDelOk'],
                               parse_mode='Markdown')
         bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                       reply_markup=keyboardReturnMyAddrs(infoUserCall))
@@ -576,7 +576,7 @@ def callback_query(call):
     elif re.search("^editAddr-+", call.data):
         addressCode = str(call.data).replace('editAddr-', '')
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=translations[infoUserCall[''en'']]['optEdit'],
+                              text=translations[infoUserCall['en']]['optEdit'],
                               parse_mode='Markdown')
         bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                       reply_markup=keyboardEditAddress(infoUserCall, addressCode))
@@ -585,7 +585,7 @@ def callback_query(call):
     elif re.search("^setNameAddr-+", call.data):
         addressCode = str(call.data).replace('setNameAddr-', '')
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=translations[infoUserCall[''en'']]['newNameAddr'],
+                              text=translations[infoUserCall['en']]['newNameAddr'],
                               parse_mode='Markdown')
 
         logger.debug(
@@ -599,7 +599,7 @@ def callback_query(call):
     elif re.search("^setCodeAddr-+", call.data):
         addressCode = str(call.data).replace('setCodeAddr-', '')
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=translations[infoUserCall[''en'']]['newCodeAddr'],
+                              text=translations[infoUserCall['en']]['newCodeAddr'],
                               parse_mode='Markdown')
 
         logger.debug(
@@ -613,7 +613,7 @@ def callback_query(call):
     elif re.search("^notAddr-+", call.data):
         addressCode = str(call.data).replace('notAddr-', '')
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=translations[infoUserCall[''en'']]['descNotifications'],
+                              text=translations[infoUserCall['en']]['descNotifications'],
                               parse_mode='Markdown')
 
         bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id,
@@ -624,7 +624,7 @@ def callback_query(call):
         addressCode = str(call.data).replace('notON-', '')
         logger.info("Activate notifications for: user -> {0} address ->{1}".format(infoUserCall['_id'], addressCode))
         addrCol.update_one({"address": addressCode, "idUser": infoUserCall['_id']}, {"$set": {"notifications": True}})
-        messageText = translations[infoUserCall[''en'']]['statusNotifications']
+        messageText = translations[infoUserCall['en']]['statusNotifications']
         messageText = messageText.replace("<STATUS>", "ON")
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=messageText, parse_mode='Markdown')
@@ -636,7 +636,7 @@ def callback_query(call):
         addressCode = str(call.data).replace('notOFF-', '')
         logger.info("Desactivate notifications for: user -> {0} address ->{1}".format(infoUserCall['_id'], addressCode))
         addrCol.update_one({"address": addressCode, "idUser": infoUserCall['_id']}, {"$set": {"notifications": False}})
-        messageText = translations[infoUserCall[''en'']]['statusNotifications']
+        messageText = translations[infoUserCall['en']]['statusNotifications']
         messageText = messageText.replace("<STATUS>", "OFF")
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=messageText, parse_mode='Markdown')
@@ -660,7 +660,7 @@ def message_other(message):
         logger.debug("Save the name address on lastMessage -> idUser: {0}, nameAddr: {1}".format(infoUserDB['_id'],
                                                                                                  message.text))
         response = bot.send_message(chat_id=infoUserDB['_id'],
-                                    text=str(translations[infoUserDB[''en'']]['newAddr2']),
+                                    text=str(translations[infoUserDB['en']]['newAddr2']),
                                     parse_mode='Markdown')
         userColl.update_one({"_id": str(infoUserDB['_id'])}, {
             "$set": {"lastMessage.type": "newaddr2", "lastMessage.idMessage": str(response.message_id),
@@ -676,7 +676,7 @@ def message_other(message):
             {'name': infoUserDB['lastMessage']['text'], "address": message.text, "idUser": infoUserDB['_id'],
              "notifications": False, "statusWorkers": {}})
 
-        messageText = str(translations[infoUserDB[''en'']]['newAddr3'])
+        messageText = str(translations[infoUserDB['en']]['newAddr3'])
         messageText = messageText.replace("<NAMEADDRESS>", infoUserDB['lastMessage']['text'])
         messageText = messageText.replace("<ADDRESS>", message.text)
 
@@ -696,7 +696,7 @@ def message_other(message):
 
         infoAddr = addrCol.find_one({'idUser': str(infoUserDB['_id']), "address": infoUserDB['lastMessage']['text']})
 
-        messageText = str(translations[infoUserDB[''en'']]['addrUpdate'])
+        messageText = str(translations[infoUserDB['en']]['addrUpdate'])
         messageText = messageText.replace("<NAMEADDRESS>", infoAddr['name'])
         messageText = messageText.replace("<ADDRESS>", infoAddr['address'])
         bot.send_message(chat_id=infoUserDB['_id'], text=messageText, parse_mode='Markdown')
@@ -713,7 +713,7 @@ def message_other(message):
 
         infoAddr = addrCol.find_one({'idUser': str(infoUserDB['_id']), "address": message.text})
 
-        messageText = str(translations[infoUserDB[''en'']]['addrUpdate'])
+        messageText = str(translations[infoUserDB['en']]['addrUpdate'])
         messageText = messageText.replace("<NAMEADDRESS>", infoAddr['name'])
         messageText = messageText.replace("<ADDRESS>", infoAddr['address'])
         bot.send_message(chat_id=infoUserDB['_id'], text=messageText, parse_mode='Markdown')
