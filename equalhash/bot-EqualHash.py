@@ -118,7 +118,6 @@ def keyboardStats1(infoUserDB):
     markup.row_width = 2
     markup.add(InlineKeyboardButton(translations['statsp2m'], callback_data="statsp2m"),
                InlineKeyboardButton(translations['statsaddr'], callback_data="statsaddr"))
-    markup.add(InlineKeyboardButton(translations['return'], callback_data="statsReturn"))
     
     return markup
 
@@ -537,7 +536,6 @@ def callback_query(call):
                               parse_mode='Markdown')
         bot.edit_message_reply_markup(chat_id=infoUserCall['_id'], message_id=call.message.message_id,
                                       reply_markup=keyboardAddress(infoUserCall, addrs, 'myaddr-', False))
-        markup.add(InlineKeyboardButton(translations['return'], callback_data="statsReturn"))
 
     # Send keyboard for edit information address
     elif re.search("^myaddr-+", call.data):
