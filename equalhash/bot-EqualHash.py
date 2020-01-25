@@ -443,8 +443,8 @@ def callback_query(call):
     if call.data == "statsp2m":
         response = requestAPI(POOLSTATS)
         logger.debug("Response API: {0}".format(response))
-        convertedEpoch = time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(response['stats']['lastBlockFound']))
-        
+        convertedEpoch = time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime(response['stats']['lastBlockFound']))
+
         hashrate = str(round(response['hashrate'] / 1000000000, 2)) + " GH"
         networkDificult = str(round(int(response['nodes'][0]['difficulty']) / 1000000000000000, 3)) + " P"
         networkHashrate = str(round(int(response['nodes'][0]['lastBeat']) / 10000000, 2)) + " TH"
