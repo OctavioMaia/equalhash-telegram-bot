@@ -29,10 +29,10 @@ def requestAPI(argUrl):
     try:
         #response = http.request('GET', argUrl)
         response = requests.get(argUrl, verify=False)
-        if response.status != 200:
-            data_json = {"ok": False, "error_code": response.status, "description": response.data.decode('utf-8')}
+        if response.status_code != 200:
+            data_json = {"ok": False, "error_code": response.status_code, "description": response.raw}
         else:
-            data_json = json.loads(response.data.decode('utf-8'))
+            data_json = response.json()
         return data_json
 
     except Exception as e2:
