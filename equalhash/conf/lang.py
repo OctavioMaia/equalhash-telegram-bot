@@ -42,6 +42,6 @@ translations = {
                              "of status in your *Workers*.",
         "statusNotifications": "Status notifications: *<STATUS>*",
         "enableNotifications": "Choose the address you want to - *Activate* - notifications:",
-        "disableNotifications": "Choose the address you want to - *Disable* - notifications:"
-        "cancel": "<< Cancel",
+        "disableNotifications": "Choose the address you want to - *Disable* - notifications:",
+        "cancel": "<< Cancel"
 }
