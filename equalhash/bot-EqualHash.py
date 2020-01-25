@@ -118,7 +118,8 @@ def keyboardStats1(infoUserDB):
     markup.row_width = 2
     markup.add(InlineKeyboardButton(translations['statsp2m'], callback_data="statsp2m"),
                InlineKeyboardButton(translations['statsaddr'], callback_data="statsaddr"))
-
+    markup.add(InlineKeyboardButton(translations['return'], callback_data="statsReturn"))
+    
     return markup
 
 
@@ -447,11 +448,10 @@ def callback_query(call):
         networkHashrate = str(round(int(response['nodes'][0]['lastBeat']) / 10000000, 2)) + " TH"
         messageText = u"\U0001F465 Miners Online: *{0}*\n\n".format(response['minersTotal'])
         messageText = messageText + u"\U0001F6A7 Pool Hash Rate: *{0}*\n\n".format(hashrate)
-        messageText = messageText + u"\U0001F552 Last Block Found: *{0} hours ago*\n\n".format(response['maturedTotal'])
+        messageText = messageText + u"\U0001F552 Last Block Found: *{0} hours ago*\n\n".format(response['stats']['lastBlockFound'])
         messageText = messageText + u"\U0001F513 Network Difficulty: *{0}*\n\n".format(networkDificult)
         messageText = messageText + u"\u26A1 Network Hash Rate: *{0}*\n\n".format(networkHashrate)
-        messageText = messageText + u"\U0001F4F6 Blockchain Height: *{0}*".format(
-            thousandSep(response["nodes"][0]["height"]))
+        messageText = messageText + u"\U0001F4F6 Blockchain Height: *{0}*".format(thousandSep(response["nodes"][0]["height"]))
 
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=messageText,
                               parse_mode='Markdown')
@@ -537,6 +537,7 @@ def callback_query(call):
                               parse_mode='Markdown')
         bot.edit_message_reply_markup(chat_id=infoUserCall['_id'], message_id=call.message.message_id,
                                       reply_markup=keyboardAddress(infoUserCall, addrs, 'myaddr-', False))
+        markup.add(InlineKeyboardButton(translations['return'], callback_data="statsReturn"))
 
     # Send keyboard for edit information address
     elif re.search("^myaddr-+", call.data):
