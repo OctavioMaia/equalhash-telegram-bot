@@ -9,6 +9,7 @@ import re
 from datetime import datetime
 import telebot
 import urllib3
+import requests
 from conf.lang import translations
 from pymongo import MongoClient
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -26,7 +27,8 @@ def thousandSep(number):
 # Request to API data
 def requestAPI(argUrl):
     try:
-        response = http.request('GET', argUrl)
+        #response = http.request('GET', argUrl)
+        response = requests.get(argUrl, verify=False)
         if response.status != 200:
             data_json = {"ok": False, "error_code": response.status, "description": response.data.decode('utf-8')}
         else:
@@ -722,4 +724,4 @@ def message_other(message):
         logger.warning("Unidentified message: {0}".format(message.text))
 
 
-bot.polling(none_stop=True)
+bot.polling(none_stop=True, timeout=123)

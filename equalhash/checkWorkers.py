@@ -8,6 +8,7 @@ from pymongo import MongoClient
 import urllib3
 import json
 import os
+import requests
 from datetime import datetime
 
 # Go to directory
@@ -18,7 +19,8 @@ os.chdir(directory)
 # Request to API data
 def requestAPI(argUrl):
     try:
-        response = http.request('GET', argUrl)
+        #response = http.request('GET', argUrl)
+        response = requests.get(argUrl, verify=False)
         if response.status != 200:
             data_json = {"ok": False, "error_code": response.status, "description": response.data.decode('utf-8')}
         else:
